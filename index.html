@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Электронное Меню</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans text-gray-800">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#fff0f6] via-white to-[#ffe8f3]"></div>
+    <div class="absolute -top-24 -left-20 h-72 w-72 rounded-full bg-[#ff60a6]/25 blur-3xl animate-pulse"></div>
+    <div class="absolute top-1/3 -right-20 h-80 w-80 rounded-full bg-fuchsia-400/20 blur-3xl animate-ping [animation-duration:6s]"></div>
+    <div class="absolute -bottom-24 left-1/4 h-96 w-96 rounded-full bg-pink-300/20 blur-3xl animate-pulse [animation-duration:5s]"></div>
+  </div>
+  <div class="container mx-auto p-6 max-w-3xl">
+    <!-- Заголовок и дата -->
+    <div class="text-center mb-8">
+      <img src="logo.svg" alt="Логотип" class="w-[200px] h-full object-cover mx-auto mb-4" />
+      <h1 class="text-3xl font-extrabold text-[#ff60a6] mb-2">Электронное Меню</h1>
+    </div>
+
+    <!-- Контейнеры для динамического контента -->
+    <div id="menu-container"></div>
+  </div>
+
+  <script>
+    const menuData = [
+      {
+        category: "Комбо",
+        items: [
+          { name: "Картошка фри, Наггетсы, Сырные палочки, Соус", price: "350 руб", image: "img/kombo.jpg" }
+        ]
+      },
+      {
+        category: "Соусы",
+        items: [
+          { name: "Соус барбекю", price: "40 руб", image: "img/sb.jpg" },
+          { name: "Соус терьяки", price: "40 руб", image: "img/st.webp" },
+          { name: "Соус кимчи", price: "40 руб", image: "img/sk.jpg" },
+          { name: "Соус Цезарь", price: "40 руб", image: "img/sc.webp" },
+          { name: "Соус горчица", price: "40 руб", image: "img/sg.jpg" }
+        ]
+      },
+      {
+        category: "Соки",
+        items: [
+          { name: "Сок с льдом", price: "200 руб", image: "https://via.placeholder.com/50?text=Juice" },
+          { name: "Сок с виноградом", price: "250 руб", image: "https://via.placeholder.com/50?text=Juice" },
+          { name: "Сок яблочный", price: "250 руб", image: "https://via.placeholder.com/50?text=Juice" },
+          { name: "Сок абрикосовый", price: "250 руб", image: "https://via.placeholder.com/50?text=Juice" },
+          { name: "Тёплый какао", price: "250 руб", image: "https://via.placeholder.com/50?text=Juice" }
+        ]
+      },
+      {
+        category: "Чай фруктовый",
+        items: [
+          { name: "500 мл", description: "Яблоко, Банан, Апельсин", price: "100 руб", image: "https://via.placeholder.com/50?text=Tea" },
+          { name: "1 литр", price: "200 руб", image: "https://via.placeholder.com/50?text=Tea" }
+        ]
+      },
+      {
+        category: "Чай с чабрецом",
+        items: [
+          { name: "500 мл", price: "100 руб", image: "https://via.placeholder.com/50?text=Tea" },
+          { name: "1 литр", price: "200 руб", image: "https://via.placeholder.com/50?text=Tea" }
+        ]
+      },
+      {
+        category: "Чай облепиховый",
+        items: [
+          { name: "500 мл", price: "100 руб", image: "https://via.placeholder.com/50?text=Tea" },
+          { name: "1 литр", price: "200 руб", image: "https://via.placeholder.com/50?text=Tea" }
+        ]
+      },
+      {
+        category: "Чай татарский",
+        items: [
+          { name: "500 мл", price: "100 руб", image: "https://via.placeholder.com/50?text=Tea" },
+          { name: "1 литр", price: "200 руб", image: "https://via.placeholder.com/50?text=Tea" }
+        ]
+      },
+      {
+        category: "Коктейли",
+        items: [
+          { name: "Зефир", description: "Зефир, йогурт, банан", price: "200 руб", image: "https://via.placeholder.com/50?text=Cocktail" },
+          { name: "Тропический", description: "Банан, молоко, апельсин", price: "200 руб", image: "https://via.placeholder.com/50?text=Cocktail" },
+          { name: "Махито", description: "Лимон, Спрайт", price: "200 руб", image: "https://via.placeholder.com/50?text=Cocktail" }
+        ]
+      },
+      {
+        category: "Мороженое",
+        items: [
+          { name: "Микс", description: "Молоко, банан, мороженое", price: "400 руб", image: "img/mr.jpg" }
+        ]
+      },
+      {
+        category: "Смузи",
+        items: [
+          { name: "Фруктовый", description: "Яблоко, банан, апельсин", price: "180 руб", image: "img/smf.jpg" },
+          { name: "Страсть вампира", description: "Банан, черника, киви, клубника", price: "250 руб", image: "img/smv.jpg" },
+          { name: "Летний", description: "Яблоко, банан, йогурт, абрикос", price: "250 руб", image: "img/sml.jpg" },
+          { name: "Киви", description: "Киви, лед, кефир", price: "250 руб", image: "img/sml.jpg" }
+        ]
+      },
+      {
+        category: "Закуски",
+        items: [
+          { name: "Картошка фри", price: "130 руб", image: "img/kf.jpeg" },
+          { name: "Наггетсы (3 шт)", price: "60 руб", image: "img/ng.jpg" },
+          { name: "Наггетсы (6 шт)", price: "105 руб", image: "img/ng.jpg" },
+          { name: "Наггетсы (9 шт)", price: "145 руб", image: "img/ng.jpg" },
+          { name: "Наггетсы (12 шт)", price: "275 руб", image: "img/ng.jpg" },
+          { name: "Сырные шарики (3 шт)", price: "145 руб", image: "img/sw.jpg" },
+          { name: "Сырные шарики (6 шт)", price: "275 руб", image: "img/sw.jpg" },
+          { name: "Сырные палочки (3 шт)", price: "145 руб", image: "img/sp.jpeg" },
+          { name: "Сырные палочки (6 шт)", price: "275 руб", image: "img/sp.jpeg" },
+          { name: "Креветки (4 шт)", price: "170 руб", image: "img/kr.webp" },
+          { name: "Креветки (6 шт)", price: "250 руб", image: "img/kr.webp" },
+          { name: "Креветки (9 шт)", price: "360 руб", image: "img/kr.webp" }
+        ]
+      },
+      {
+        category: "Бургеры",
+        items: [
+          { name: "Бургер-сэндвич", description: "Колбаса (вар), листья салата, сыр, помидор, жар. яйцо", price: "200 руб", image: "https://via.placeholder.com/50?text=Burger" },
+          { name: "Бургер", description: "Колбаса, сыр", price: "55 руб", image: "https://via.placeholder.com/50?text=Burger" }
+        ]
+      },
+      {
+        category: "Хот-доги",
+        items: [
+          { name: "Крон-дог", description: "Сосиска", price: "65 руб", image: "https://via.placeholder.com/50?text=HotDog" },
+          { name: "Данский хот-дог", description: "Сосиска, булочка, солёные огурцы", price: "180 руб", image: "https://via.placeholder.com/50?text=HotDog" },
+          { name: "Французский хот-дог", description: "Сосиска, булочка", price: "160 руб", image: "https://via.placeholder.com/50?text=HotDog" }
+        ]
+      }
+    ];
+
+    const menuContainer = document.getElementById('menu-container');
+
+    menuData.forEach(section => {
+      // Создаем секцию
+      const sectionElement = document.createElement('section');
+      sectionElement.className = 'mb-10';
+
+      // Заголовок секции
+      const sectionTitle = document.createElement('h2');
+      sectionTitle.className = 'text-2xl font-bold text-[#ff60a6] mb-4 border-b pb-2 border-[#ff60a6]/30';
+      sectionTitle.textContent = section.category;
+      sectionElement.appendChild(sectionTitle);
+
+      // Контейнер для элементов
+      const itemsContainer = document.createElement('div');
+      itemsContainer.className = 'space-y-3';
+      sectionElement.appendChild(itemsContainer);
+
+      // Перебираем элементы в секции
+      section.items.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'group flex items-center justify-between bg-white p-4 rounded-2xl shadow border border-gray-100 transition hover:shadow-xl hover:-translate-y-0.5 hover:ring-2 hover:ring-[#ff60a6]/40 hover:border-[#ff60a6]/30';
+
+        const itemContent = `
+          <div class="flex items-center min-w-0">
+            <img src="${item.image}" alt="${section.category}" class="mr-4 w-20 h-20 object-cover rounded-xl ring-1 ring-gray-100 transition group-hover:ring-[#ff60a6]/40 shrink-0">
+            <div class="min-w-0 flex-1">
+              <p class="font-medium text-gray-900 whitespace-normal break-words transition group-hover:text-[#ff60a6]">${item.name}</p>
+              ${item.description ? `<p class="text-sm text-gray-500">${item.description}</p>` : ''}
+            </div>
+          </div>
+          <span class="ml-4 flex-1 border-b border-dashed mx-3 border-[#ff60a6]/20"></span>
+          <span class="inline-flex items-center justify-center rounded-full bg-[#ff60a6] text-white text-sm font-semibold px-3 py-1 whitespace-nowrap shadow-sm">${item.price}</span>
+        `;
+        itemElement.innerHTML = itemContent;
+        itemsContainer.appendChild(itemElement);
+      });
+
+      menuContainer.appendChild(sectionElement);
+    });
+  </script>
+</body>
+</html>
