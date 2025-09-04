@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Электронное Меню</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="tailwind.css">
 </head>
 <body class="font-sans text-gray-100">
   <div class="fixed inset-0 -z-10 overflow-hidden">
@@ -26,7 +26,7 @@
 
     <!-- Контейнеры для динамического контента -->
     <div id="menu-container"></div>
-  </div>
+      </div>
 
   <!-- Модальное окно -->
   <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -41,12 +41,12 @@
         <div class="mb-3 flex items-center justify-between gap-4">
           <h3 id="modal-title" class="text-xl font-bold text-white"></h3>
           <span id="modal-price" class="inline-flex items-center justify-center rounded-full bg-[#ff60a6] text-white text-sm font-semibold px-3 py-1 whitespace-nowrap shadow-sm"></span>
-        </div>
+      </div>
         <p id="modal-desc" class="text-sm text-gray-300"></p>
         <div id="modal-category" class="mt-3 text-xs text-[#ff60a6]"></div>
+            </div>
+        </div>
       </div>
-    </div>
-  </div>
 
   <script>
     const menuData = [
